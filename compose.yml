@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: mysql
+    restart: always
+    container_name: untilthen_db
+    environment:
+      - 'MYSQL_DATABASE=untilthen'
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
