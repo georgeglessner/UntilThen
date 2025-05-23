@@ -2,7 +2,7 @@
 ### Events made simple
 --- 
 
-This is a project to help my learn Laravel. This is a **major** work in progress for now. 
+This is a project to help me learn Laravel. This is a **major** work in progress for now. 
 
 
 ## Phase 1

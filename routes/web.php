@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EventController;
+use App\Models\RSVP;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -8,10 +10,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('events/create', [EventController::class, 'create'])
+    ->middleware('auth')
+    ->name('events.create');
+
 // event route, need to add event hash into url param
-Route::get('/event', function () {
-    return 'This is an event';
-});
+Route::resource('events', EventController::class)->except(['create', 'index']);
+
+// rsvp route
+Route::resource('rsvp', RSVP::class);
+
+Route::get('events/{hash}', [EventController::class, 'show']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -19,6 +28,8 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
+
+    Route::get('events', [EventController::class, 'index'])->name('events.index');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

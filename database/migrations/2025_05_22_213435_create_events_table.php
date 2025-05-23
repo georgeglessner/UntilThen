@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->ulid("id");
             $table->string("event_name", length: 100);
             $table->timestamp("start_date");
             $table->timestamp("end_date");
@@ -20,7 +21,8 @@ return new class extends Migration
             $table->text("description");
             $table->text("location");
             $table->timestamps();
-            
+            $table->tinyInteger("isActive")->default(true);
+
             $table->foreign("created_by")->references("id")->on("users");
         });
     }
