@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rsvp', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("event_id");
+            $table->string("event_id"); // TODO: update this because it is now a ULID
             $table->unsignedBigInteger("user_id")->nullable(); // if signed in
             $table->string('name')->nullable(value: false);
             $table->enum('response', ['yes', 'no', 'maybe'])->nullable(value: false);

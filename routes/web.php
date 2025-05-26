@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\RSVPController;
 use App\Models\RSVP;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -18,7 +19,7 @@ Route::get('events/create', [EventController::class, 'create'])
 Route::resource('events', EventController::class)->except(['create', 'index']);
 
 // rsvp route
-Route::resource('rsvp', RSVP::class);
+Route::resource('rsvp', RSVPController::class);
 
 Route::get('events/{hash}', [EventController::class, 'show']);
 

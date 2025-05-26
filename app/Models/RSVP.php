@@ -16,4 +16,12 @@ class RSVP extends Model
      * @var string
      */
     protected $table = 'rsvp';
+
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'response',
+        'event_id'
+    ];
 }

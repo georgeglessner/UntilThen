@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RSVP;
+
 
 class RSVPController extends Controller
 {
@@ -17,9 +19,10 @@ class RSVPController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create(Request $request)
+    {  
+        $event_id = $request->query('event_id');
+        return view('rsvp', compact('event_id'));
     }
 
     /**
@@ -27,7 +30,15 @@ class RSVPController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:32',
+            'response' => 'required|in:yes,no,maybe',
+            'event_id' => 'required|string',
+        ]);
+        RSVP::create($validated);
+        return redirect()->route('events.show', $validated['event_id'])->with('success', 'RSVP submitted!');
     }
 
     /**
@@ -36,6 +47,7 @@ class RSVPController extends Controller
     public function show(string $id)
     {
         //
+        die("here");
     }
 
     /**
