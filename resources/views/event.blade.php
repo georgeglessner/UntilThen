@@ -1,12 +1,12 @@
 <x-layouts.app :title="__('Event')">
     @if(session('success'))
-        <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg text-lg font-semibold animate-fade-in">
-            {{ session('success') }}
-        </div>
+    <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg text-lg font-semibold animate-fade-in">
+        {{ session('success') }}
+    </div>
     @endif
     @php
-        $isCreate = $isCreate ?? false;
-        $isOwner = $isCreate ? true : (auth()->check() && auth()->id() === $event->created_by);
+    $isCreate = $isCreate ?? false;
+    $isOwner = $isCreate ? true : (auth()->check() && auth()->id() === $event->created_by);
     @endphp
 
     @if($isOwner)
@@ -65,6 +65,37 @@
                 <button type="submit"
                     class="px-8 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition text-lg">Save Changes</button>
             </div>
+
+            @if(!$isCreate)
+            {{-- RSVP List Section --}}
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300">RSVP List</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-neutral-900 rounded-xl shadow divide-y divide-blue-100 dark:divide-neutral-800">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-blue-600 dark:text-blue-200">Name</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-blue-600 dark:text-blue-200">Response</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-blue-600 dark:text-blue-200">Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($rsvps as $rsvp)
+                            <tr class="border-b last:border-0 border-blue-50 dark:border-neutral-800">
+                                <td class="px-4 py-2 text-neutral-900 dark:text-white">{{ $rsvp->name }}</td>
+                                <td class="px-4 py-2 text-neutral-700 dark:text-neutral-200">{{ $rsvp->response }}</td>
+                                <td class="px-4 py-2 text-neutral-700 dark:text-neutral-200">{{ $rsvp->comment ?? '' }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="3" class="px-4 py-4 text-center text-neutral-500 dark:text-neutral-400">No RSVPs yet.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endif
         </div>
     </form>
     @else
@@ -97,6 +128,23 @@
                 </a>
             </div>
             <div class="absolute bottom-0 left-0 w-24 h-24 bg-pink-400/20 rounded-full blur-2xl z-0"></div>
+            {{-- RSVP Response Counts --}}
+            @php
+            $yesCount = $rsvps->where('response', 'yes')->count();
+            $noCount = $rsvps->where('response', 'no')->count();
+            $maybeCount = $rsvps->where('response', 'maybe')->count();
+            @endphp
+            <div class="flex gap-6 mb-6 justify-center">
+                <div class="flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold">
+                    👍 Yes: <span>{{ $yesCount }}</span>
+                </div>
+                <div class="flex items-center gap-2 text-red-500 dark:text-red-400 font-semibold">
+                    ❌ No: <span>{{ $noCount }}</span>
+                </div>
+                <div class="flex items-center gap-2 text-yellow-500 dark:text-yellow-300 font-semibold">
+                    🤔 Maybe: <span>{{ $maybeCount }}</span>
+                </div>
+            </div>
         </div>
     </div>
     @endif

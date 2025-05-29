@@ -38,7 +38,14 @@ class RSVPController extends Controller
             'event_id' => 'required|string',
             'comment' => 'nullable|string'
         ]);
-        RSVP::create($validated);
+        try {
+            RSVP::create($validated);
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == 23000) { // Integrity constraint violation
+                return redirect()->back()->withInput()->withErrors(['email' => 'You have already RSVP’d for this event with this email.']);
+            }
+            throw $e;
+        }
         return redirect()->route('events.show', $validated['event_id'])->with('success', 'RSVP submitted!');
     }
 

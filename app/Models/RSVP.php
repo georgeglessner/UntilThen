@@ -26,7 +26,7 @@ class RSVP extends Model
         'comment'
     ];
 
-    public function get_rsvps_for_event(string $eventHash) {
+    public static function get_rsvps_for_event(string $eventHash) {
         return RSVP::where('event_id', $eventHash)->latest('created_at')->get();
     }
 }

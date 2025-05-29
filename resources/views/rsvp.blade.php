@@ -1,4 +1,13 @@
 <x-layouts.app :title="__('RSVP')">
+     @if($errors->any())
+    <div class="mb-6">
+        @foreach($errors->all() as $error)
+            <div class="bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg text-lg font-semibold mb-2 animate-fade-in">
+                {{ $error }}
+            </div>
+        @endforeach
+    </div>
+    @endif
     <div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900">
         <div class="w-full max-w-xl bg-white dark:bg-neutral-900 rounded-3xl shadow-2xl p-12 space-y-8 border-2 border-blue-200 dark:border-blue-700 relative overflow-hidden">
             <div class="absolute -top-8 -right-8 bg-blue-500/20 rounded-full w-32 h-32 blur-2xl z-0"></div>
@@ -26,23 +35,23 @@
                         class="w-full rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition">
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="description">Comment</label>
+                    <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="comment">Comment</label>
                     <textarea id="comment" name="comment" rows="4"
                         class="w-full rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition"
-                    ></textarea>
+                    >{{ old('comment') }}</textarea>
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="response">Response</label>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
-                        <input type="radio" id="response_yes" name="response" value="yes" class="hidden" {{ old('response') == 'yes' ? 'checked' : '' }} required>
+                        <input type="radio" id="response_yes" name="response" value="yes" class="hidden" {{ old('response') == 'yes' ? 'checked' : '' }}>
                         <label for="response_yes" id="label_yes" class="w-full sm:w-auto cursor-pointer px-6 py-4 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-bold text-lg flex items-center justify-center gap-2 shadow transition-all text-center">
                             ✅ Yes
                         </label>
-                        <input type="radio" id="response_no" name="response" value="no" class="hidden" {{ old('response') == 'no' ? 'checked' : '' }} required>
+                        <input type="radio" id="response_no" name="response" value="no" class="hidden" {{ old('response') == 'no' ? 'checked' : '' }}>
                         <label for="response_no" id="label_no" class="w-full sm:w-auto cursor-pointer px-6 py-4 rounded-full bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 font-bold text-lg flex items-center justify-center gap-2 shadow transition-all text-center">
                             ❌ No
                         </label>
-                        <input type="radio" id="response_maybe" name="response" value="maybe" class="hidden" {{ old('response') == 'maybe' ? 'checked' : '' }} required>
+                        <input type="radio" id="response_maybe" name="response" value="maybe" class="hidden" {{ old('response') == 'maybe' ? 'checked' : '' }}>
                         <label for="response_maybe" id="label_maybe" class="w-full sm:w-auto cursor-pointer px-6 py-4 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 font-bold text-lg flex items-center justify-center gap-2 shadow transition-all text-center">
                             🤔 Maybe
                         </label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Events;
+use App\Models\RSVP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,8 +54,8 @@ class EventController extends Controller
     public function show(string $hash)
     {
         $event = Events::get_event($hash);
-        // TODO: grab RSVP's and pass to event
-        return view('event', compact('event'));
+        $rsvps = RSVP::get_rsvps_for_event($hash);
+        return view('event', compact('event', 'rsvps'));
     }
 
     /**
