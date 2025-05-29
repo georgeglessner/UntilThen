@@ -41,6 +41,7 @@ class EventController extends Controller
             'is_active' => 'boolean',
         ]);
         $validated['created_by'] = Auth::user()->id;
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
         Events::create($validated);
 
         return redirect()->route('events.index');
@@ -52,6 +53,7 @@ class EventController extends Controller
     public function show(string $hash)
     {
         $event = Events::get_event($hash);
+        // TODO: grab RSVP's and pass to event
         return view('event', compact('event'));
     }
 
@@ -69,7 +71,15 @@ class EventController extends Controller
     public function update(Request $request, string $id)
     {
         $event = Events::findOrFail($id);
-        $event->update($request->all());
+        $validated = $request->validate([
+            'event_name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date'
+        ]);
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+        $event->update($validated);
         return redirect()->route('events.index');
     }
 

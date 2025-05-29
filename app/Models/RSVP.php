@@ -22,6 +22,11 @@ class RSVP extends Model
         'email',
         'phone',
         'response',
-        'event_id'
+        'event_id',
+        'comment'
     ];
+
+    public function get_rsvps_for_event(string $eventHash) {
+        return RSVP::where('event_id', $eventHash)->latest('created_at')->get();
+    }
 }

@@ -21,7 +21,7 @@ class Events extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'event_name',   
+        'event_name',
         'description',
         'location',
         'start_date',
@@ -30,19 +30,39 @@ class Events extends Model
         'is_active'
     ];
 
-    public static function get_events() {
+    public static function get_events()
+    {
         $user = Auth::user();
         if (!$user) {
-            return collect(); 
+            return collect();
         }
-        return Events::with('user')->where('created_by', $user->id)->get();
+
+        return Events::with('user')
+            ->where('created_by', $user->id)
+            ->where('start_date', '>=', now())
+            ->oldest('start_date')->get();
     }
 
-    public static function get_event(string $hash) {
+    public static function get_past_events()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return collect();
+        }
+
+        return Events::with('user')
+            ->where('created_by', $user->id)
+            ->where('start_date', '<=', now())
+            ->latest('start_date')->get();
+    }
+
+    public static function get_event(string $hash)
+    {
         return Events::with('user')->findOrFail($hash);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

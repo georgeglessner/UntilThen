@@ -36,6 +36,7 @@ class RSVPController extends Controller
             'phone' => 'nullable|string|max:32',
             'response' => 'required|in:yes,no,maybe',
             'event_id' => 'required|string',
+            'comment' => 'nullable|string'
         ]);
         RSVP::create($validated);
         return redirect()->route('events.show', $validated['event_id'])->with('success', 'RSVP submitted!');
@@ -47,7 +48,6 @@ class RSVPController extends Controller
     public function show(string $id)
     {
         //
-        die("here");
     }
 
     /**
