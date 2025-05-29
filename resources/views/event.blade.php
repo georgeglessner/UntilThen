@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Event')">
+<x-layouts.app :title="__($event->event_name)">
     @if(session('success'))
     <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg text-lg font-semibold animate-fade-in">
         {{ session('success') }}
@@ -17,7 +17,7 @@
         @endif
         <div class="w-full max-w-3xl px-8 py-12">
             <h1 class="text-4xl font-bold mb-10 text-center text-neutral-900 dark:text-white">
-                {{ $isCreate ? 'Create Event' : 'Edit Event' }}
+                {{ $isCreate ? 'Create Event' : $event->event_name }}
             </h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div>
@@ -62,14 +62,21 @@
             </div>
             <div class="flex justify-between items-center mt-8">
                 <a href="/events" class="text-blue-600 hover:underline text-sm">← Back to Events</a>
-                <button type="submit"
-                    class="px-8 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition text-lg">Save Changes</button>
+                <div class="flex gap-4 items-center">
+                    @if(!$isCreate)
+                        <button type="button" onclick="navigator.clipboard.writeText(window.location.href);this.innerText='Link Copied!'" class="px-8 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition text-lg">
+                            🔗 Share Event
+                        </button>
+                    @endif
+                    <button type="submit"
+                        class="px-8 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition text-lg">Save Changes</button>
+                </div>
             </div>
 
             @if(!$isCreate)
             {{-- RSVP List Section --}}
             <div class="mt-12">
-                <h2 class="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300">RSVP List</h2>
+                <h2 class="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300 text-center">RSVP List</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white dark:bg-neutral-900 rounded-xl shadow divide-y divide-blue-100 dark:divide-neutral-800">
                         <thead>

@@ -15,17 +15,17 @@ Route::get('events/create', [EventController::class, 'create'])
     ->middleware('auth')
     ->name('events.create');
 
-// event route, need to add event hash into url param
-Route::resource('events', EventController::class)->except(['create', 'index']);
+Route::get('events/past', [EventController::class, 'past'])->name('events.past');
+
+Route::get('events/{hash}', [EventController::class, 'show']);
 
 // rsvp route
 Route::resource('rsvp', RSVPController::class);
 
-Route::get('events/{hash}', [EventController::class, 'show']);
+// event route, need to add event hash into url param
+Route::resource('events', EventController::class)->except(['create', 'index']);
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::redirect('dashboard', 'events')->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

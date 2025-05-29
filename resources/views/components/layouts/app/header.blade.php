@@ -7,7 +7,7 @@
 @auth
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <flux:header class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
         <a href="{{ route('events.index') }}" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0" wire:navigate>
@@ -15,8 +15,20 @@
         </a>
 
         <flux:navbar class="-mb-px max-lg:hidden">
-            <flux:navbar.item icon="calendar" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>
+            <flux:navbar.item icon="calendar-days" :href="route('events.index')" :current="request()->routeIs('events.index')" wire:navigate>
+                {{ __('Upcoming Events') }}
+            </flux:navbar.item>
+        </flux:navbar>
+
+        <flux:navbar class="-mb-px max-lg:hidden">
+            <flux:navbar.item icon="plus" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>
                 {{ __('Create New Event') }}
+            </flux:navbar.item>
+        </flux:navbar>
+
+        <flux:navbar class="-mb-px max-lg:hidden">
+            <flux:navbar.item icon="archive-box-x-mark" :href="route('events.past')" :current="request()->routeIs('events.past')" wire:navigate>
+                {{ __('Past / Inactive Events') }}
             </flux:navbar.item>
         </flux:navbar>
 
@@ -75,8 +87,16 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Platform')">
-                <flux:navlist.item icon="calendar" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>
+                <flux:navlist.item icon="calendar-days" :href="route('events.index')" :current="request()->routeIs('events.index')" wire:navigate>
+                    {{ __('Upcoming Events') }}
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="plus" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>
                     {{ __('Create New Event') }}
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="archive-box-x-mark" :href="route('events.past')" :current="request()->routeIs('events.past')" wire:navigate>
+                    {{ __('Past / Inactive Events') }}
                 </flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
@@ -86,7 +106,7 @@
     @else
 
     <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:header class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <a href="/" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0">

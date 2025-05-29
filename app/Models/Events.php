@@ -40,10 +40,11 @@ class Events extends Model
         return Events::with('user')
             ->where('created_by', $user->id)
             ->where('start_date', '>=', now())
+            ->where('is_active', 1)
             ->oldest('start_date')->get();
     }
 
-    public static function get_past_events()
+    public static function get_past_and_inactive_events()
     {
         $user = Auth::user();
         if (!$user) {
@@ -52,7 +53,10 @@ class Events extends Model
 
         return Events::with('user')
             ->where('created_by', $user->id)
-            ->where('start_date', '<=', now())
+            ->where(function ($query) {
+                $query->where('start_date', '<=', now())
+                    ->orWhere('is_active', 0);
+            })
             ->latest('start_date')->get();
     }
 

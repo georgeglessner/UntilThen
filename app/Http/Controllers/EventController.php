@@ -84,11 +84,9 @@ class EventController extends Controller
         return redirect()->route('events.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function past()
     {
-        //
+        $events = Events::get_past_and_inactive_events();
+        return view('events', compact('events'));
     }
 }
