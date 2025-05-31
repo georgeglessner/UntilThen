@@ -9,16 +9,16 @@
     $isOwner = $isCreate ? true : (auth()->check() && auth()->id() === $event->created_by);
     @endphp
 
-    <div class="min-h-screen flex items-center justify-center bg-white-100 dark:bg-neutral-900">
+    <div class="min-h-screen flex items-center justify-center bg-white dark:bg-neutral-900">
         @if($isOwner)
-        <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-100 to-blue-400 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800">
-            <div class="w-full max-w-xl bg-white dark:bg-white/80 rounded-2xl shadow-2xl p-6 md:p-10 border border-neutral-200 dark:border-neutral-700">
-                <form method="POST" action="{{ $isCreate ? route('events.store') : route('events.update', $event->id) }}" class="space-y-8">
+        <div class="relative w-full max-w-xl p-0">
+            <div class="relative z-10 rounded-3xl bg-white/80 dark:bg-neutral-900/80 shadow-2xl border-0 backdrop-blur-xl p-10 md:p-14 flex flex-col items-center">
+                <form method="POST" action="{{ $isCreate ? route('events.store') : route('events.update', $event->id) }}" class="space-y-8 w-full">
                     @csrf
                     @if(!$isCreate)
                     @method('PUT')
                     @endif
-                    <h1 class="text-2xl md:text-3xl font-bold text-center text-neutral-900 dark:text-white mb-6">{{ $isCreate ? 'Create Event' : $event->event_name }}</h1>
+                    <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-700 dark:text-blue-300 drop-shadow-lg tracking-tight z-10 relative">{{ $isCreate ? 'Create Event' : $event->event_name }}</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="event_name">Event Name</label>
@@ -29,14 +29,14 @@
                         <div>
                             <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="location">Location</label>
                             <input type="text" id="location" name="location" value="{{ old('location', $event->location) }}"
-                                class="w-full rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition text-base"
+                                class="w-full rounded border border-neutral-200 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition text-base"
                                 required>
                         </div>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="description">Description</label>
-                        <textarea id="description" name="description" rows="3"
-                            class="w-full rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition text-base resize-none"
+                        <textarea id="description" name="description" rows="4"
+                            class="w-full rounded border border-neutral-200 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900 px-4 py-2 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none transition text-base"
                             required>{{ old('description', $event->description) }}</textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,7 +72,7 @@
                     @if(!$isCreate)
                     <div class="mt-10">
                         <h2 class="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300 text-center">RSVP List</h2>
-                        <div class="overflow-x-auto rounded shadow">
+                        <div class="overflow-x-auto rounded shadow max-h-64 overflow-y-auto">
                             <table class="min-w-full bg-white dark:bg-neutral-900 rounded divide-y divide-neutral-100 dark:divide-neutral-800">
                                 <thead>
                                     <tr>
@@ -102,9 +102,8 @@
             </div>
         </div>
         @else
-        <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-100 to-blue-400 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800">
+        <div class="min-h-screen flex items-center justify-center bg-white dark:bg-neutral-900">
             <div class="relative w-full max-w-xl p-0">
-                <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-400 via-blue-300 to-blue-200 blur-xl opacity-60 scale-105 z-0"></div>
                 <div class="relative z-10 rounded-3xl bg-white/80 dark:bg-neutral-900/80 shadow-2xl border-0 backdrop-blur-xl p-10 md:p-14 flex flex-col items-center">
                     <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-700 dark:text-blue-300 drop-shadow-lg tracking-tight z-10 relative">{{ $event->event_name }}</h1>
                     <div class="mb-6 w-full z-10 relative">
@@ -130,7 +129,7 @@
                         </a>
                     </div>
                     <div class="w-full max-w-md mt-8 z-10 relative">
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center rounded-xl bg-white/70 dark:bg-neutral-900/70 shadow-lg py-4 border border-blue-100 dark:border-blue-800">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center bg-white/70  py-4">
                             <div class="flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold text-lg justify-center">
                                 👍 Yes: <span>{{ $rsvps->where('response', 'yes')->count() }}</span>
                             </div>

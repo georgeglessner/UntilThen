@@ -8,9 +8,8 @@
         @endforeach
     </div>
     @endif
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-100 to-blue-400 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800">
+    <div class="min-h-screen flex items-center justify-center bg-white dark:bg-neutral-900">
         <div class="relative w-full max-w-xl p-0">
-            <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-400 via-blue-300 to-blue-200 blur-xl opacity-60 scale-105 z-0"></div>
             <div class="relative z-10 rounded-3xl bg-white/80 dark:bg-neutral-900/80 shadow-2xl border-0 backdrop-blur-xl p-10 md:p-14 flex flex-col items-center">
                 <div class="w-full max-w-md mb-6">
                     <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-700 dark:text-blue-300 drop-shadow-lg tracking-tight z-10 relative">
@@ -43,7 +42,7 @@
                             >{{ old('comment') }}</textarea>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="response">Response</label>
+                            <label class="block mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" for="response"></label>
                             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
                                 <input type="radio" id="response_yes" name="response" value="yes" class="hidden" {{ old('response') == 'yes' ? 'checked' : '' }}>
                                 <label for="response_yes" id="label_yes" class="w-full sm:w-auto cursor-pointer px-6 py-4 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-bold text-lg flex items-center justify-center gap-2 shadow transition-all text-center">
@@ -67,19 +66,6 @@
                                 class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 text-white font-extrabold shadow-xl hover:scale-105 hover:from-pink-500 hover:to-blue-500 transition-all duration-200 text-lg tracking-wide ring-2 ring-blue-200 dark:ring-blue-700">🎉 Submit RSVP</button>
                         </div>
                     </form>
-                </div>
-                <div class="w-full max-w-md mt-8 z-10 relative">
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center rounded-xl bg-white/70 dark:bg-neutral-900/70 shadow-lg py-4 border border-blue-100 dark:border-blue-800">
-                        <div class="flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold text-lg justify-center">
-                            👍 Yes: <span>{{ $yesCount ?? 0 }}</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-red-500 dark:text-red-400 font-semibold text-lg justify-center">
-                            ❌ No: <span>{{ $noCount ?? 0 }}</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-yellow-500 dark:text-yellow-300 font-semibold text-lg justify-center">
-                            🤔 Maybe: <span>{{ $maybeCount ?? 0 }}</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
