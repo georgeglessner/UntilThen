@@ -2,17 +2,30 @@
 ### Events made simple
 --- 
 
-This is a project to help me learn Laravel. This is a **major** work in progress for now. 
+This is a project to help me learn Laravel.
 
 
 ## Phase 1
 - [x] SQL schema / migrations
     - [x] Event
     - [x] RSVP
-- [ ] Routes
-    - [ ] Main page (list of your events)
-    - [ ] Event page (specific event)
-    - [ ] Create event page (enter details of event and save)
-- [ ] Controllers
-    - [ ] Event Controller
-    - [ ] RSVP Controller
+- [x] Routes
+    - [x] Main page (list of your events)
+    - [x] Event page (specific event)
+    - [x] Create event page (enter details of event and save)
+- [x] Controllers
+    - [x] Event Controller
+    - [x] RSVP Controller
+
+## Phase 2
+- [ ] Add tests
+    - [ ] Event tests 
+    - [ ] RSVP tests
+- [ ] Better Styling? 
+    - [ ] create logo
+    - [ ] unified styling
+- [ ] Features
+    - [ ] add to calendar button
+    - [ ] password protected event (hidden)
+    - [ ] invite-only (e-mail or user?)
+    - [ ] limited availability (RSVP's allowed)
